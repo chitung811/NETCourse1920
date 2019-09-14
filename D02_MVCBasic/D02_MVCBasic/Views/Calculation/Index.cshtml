@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Tính toán</h1>
+@ViewBag.A @ViewBag.PT @ViewBag.B = @ViewBag.KQ
+<form asp-action="Calculate" asp-controller="Calculation">
+    <input name="A" placeholder="Nhập số A" />
+    <select name="PT">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+    </select>
+    <input name="B" placeholder="Nhập số B" />
+    <button>=</button>
+    <span class="text-danger"></span>
+</form>
+

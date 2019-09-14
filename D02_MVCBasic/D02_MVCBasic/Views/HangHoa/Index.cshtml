@@ -1,0 +1,24 @@
+﻿@model IEnumerable<D02_MVCBasic.Models.HangHoa>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<a asp-action="Create">Tạo mới</a>
+<table class="table table-bordered">
+    <tbody>
+        @foreach (var hh in Model)
+        {
+            <tr>
+                <td>@hh.MaHh</td>
+                <td>@hh.TenHh</td>
+                <td>@hh.DonGia</td>
+                <td>
+                    <a asp-action="Edit"
+                   asp-route-id="@hh.MaHh" class="btn btn-success">Sửa</a>
+                    <a class="btn btn-danger" asp-action="Delete"
+            asp-route-id="@hh.MaHh">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
