@@ -10,6 +10,11 @@ namespace D03_SyncAsync.Controllers
 {
     public class HomeController : Controller
     {
+        public IActionResult Demo()
+        {
+            return View();
+        }
+
         // /Home/Sync
         public IActionResult Sync()
         {
