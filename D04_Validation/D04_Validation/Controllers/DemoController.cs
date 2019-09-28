@@ -23,5 +23,13 @@ namespace D04_Validation.Controllers
             }
             return View();
         }
+
+        public IActionResult CheckUserNameUnique(string UserName)
+        {
+            List<string> data = new List<string>() { "admin", "customer", "guest"};
+
+
+            return Json(!data.Contains(UserName));
+        }
     }
 }
