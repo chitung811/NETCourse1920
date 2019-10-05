@@ -14,6 +14,7 @@
     <header style="height:100px; background-color:aqua;">BANNER</header>
     <div class="row">
         <aside class="col-3 min-height-content bg-danger">
+            @await Component.InvokeAsync("MenuNgang")
             @{ 
                 var danhMuc = new string[] { "Điện máy", "Điện lạnh", "Laptop" };
             }
