@@ -13,3 +13,9 @@ Công nghệ NET, HK1 2019 - 2020
 ## 21/09/2019
 * Sync/Async
 * Validation: Model Binding
+
+## 28/09/2019
+* jQuery Validation
+
+## 05/10/2019
+* Process Upload file
