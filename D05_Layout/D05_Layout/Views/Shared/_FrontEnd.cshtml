@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    @RenderSection("styles", required: false)
+    <style>
+        .min-height-content{min-height: 400px;}
+    </style>
+</head>
+<body>
+    <header style="height:100px; background-color:aqua;">BANNER</header>
+    <div class="row">
+        <aside class="col-3 min-height-content bg-danger">
+            @await Html.PartialAsync("_DanhMuc")
+        </aside>
+        <div class="col-9 min-height-content badge bg-light">
+            @RenderBody()
+        </div>
+    </div>
+    <footer class="text-center m-2">
+        Bản quyền thuộc về K43 - CNTT - HCMUE
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

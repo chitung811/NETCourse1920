@@ -10,6 +10,16 @@ namespace D05_Layout.Controllers
 {
     public class DemoController : Controller
     {
+        public IActionResult Demo()
+        {
+            return View();
+        }
+
+        public IActionResult NoLayout()
+        {
+            return View();
+        }
+
         public IActionResult Index()
         {
             return View();
