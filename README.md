@@ -20,3 +20,6 @@ Công nghệ NET, HK1 2019 - 2020
 ## 05/10/2019
 * Process Upload file
 * Layout: RenderBody, RenderSection, PartialView, ViewComponent
+
+## 12/10/2019
+* Entity Framework Core
