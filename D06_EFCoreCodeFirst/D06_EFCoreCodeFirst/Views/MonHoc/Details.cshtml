@@ -1,0 +1,36 @@
+﻿@model D06_EFCoreCodeFirst.DataModels.MonHoc
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>MonHoc</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TenMh)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TenMh)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SoTc)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SoTc)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MonDieuKien)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MonDieuKien.MaMh)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.MaMh">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
