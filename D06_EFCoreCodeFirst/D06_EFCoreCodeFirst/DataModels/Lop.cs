@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace D06_EFCoreCodeFirst.DataModels
 {
+    [Table("Lop")]
     public class Lop
     {
         [Key]
@@ -17,11 +18,13 @@ namespace D06_EFCoreCodeFirst.DataModels
         public IEnumerable<SinhVien> SinhViens { get; set; }
     }
     
+    [Table("SinhVien")]
     public class SinhVien
     {
         [Key]
         public string MaSV { get; set; }
         [Required]
+        [MaxLength(150)]
         public string HoTen { get; set; }
         public double? DiemTichLuy { get; set; }
         public int? MaLop { get; set; }

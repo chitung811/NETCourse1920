@@ -10,6 +10,7 @@ namespace D06_EFCoreCodeFirst.DataModels
     {
         public DbSet<Lop> Lops { get; set; }
         public DbSet<SinhVien> SinhViens { get; set; }
+        public DbSet<MonHoc> MonHocs { get; set; }
 
         public MyDbContext(DbContextOptions option):base(option)
         {
