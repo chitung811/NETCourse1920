@@ -2,17 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using D07_EFCore_DBFirst.Models;
+using D07_EFCore_DBFirst.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace D07_EFCore_DBFirst.Controllers
 {
     public class HangHoaController : Controller
     {
         private readonly MyeStoreContext _context;
-        public HangHoaController(MyeStoreContext ctx)
+        private readonly IMapper _mapper;
+        public HangHoaController(MyeStoreContext ctx, IMapper mapper)
         {
             _context = ctx;
+            _mapper = mapper;
         }
         public IActionResult Index()
         {
@@ -38,6 +43,13 @@ namespace D07_EFCore_DBFirst.Controllers
             {
                 dsHangHoa = dsHangHoa.Where(p => p.DonGia <= GiaDen.Value).AsQueryable();
             }
+
+            var result = _mapper.Map<List<HangHoaViewModel>>(
+                dsHangHoa.Include(p=>p.MaLoaiNavigation)
+                .Include(p=>p.MaNccNavigation).ToList());
+
+            ViewBag.Data = result;
+
             return View();
         }
     }
