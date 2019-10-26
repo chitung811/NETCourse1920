@@ -23,3 +23,9 @@ Công nghệ NET, HK1 2019 - 2020
 
 ## 12/10/2019
 * Entity Framework Core
+
+## 19/10/2019
+* EF Core: Query, Mapper
+
+## 26/10/2019
+* Ajax
