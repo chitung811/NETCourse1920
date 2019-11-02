@@ -40,11 +40,16 @@ namespace D07_EFCore_DBFirst
             services.AddDbContext<MyeStoreContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("MyeStore")));
 
             services.AddAutoMapper(typeof(Startup));
-        }
+
+            services.AddSession(p=> {
+                p.IdleTimeout = TimeSpan.FromMinutes(1);
+            });
+        }//end ConfigureService
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseSession();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
