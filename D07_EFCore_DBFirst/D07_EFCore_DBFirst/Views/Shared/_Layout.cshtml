@@ -13,7 +13,7 @@
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
               crossorigin="anonymous"
-              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"/>
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -35,7 +35,32 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
-                </div>
+
+                </div>@using Microsoft.AspNetCore.Http;
+@using D07_EFCore_DBFirst.Helpers;
+@{ 
+    var kh = Context.Session.Get<KhachHang>("KhachHang");
+}
+                <ul class="navbar-nav">
+                    @if (kh == null)
+                    {
+                    <li class="nav-item">
+                        <a asp-action="Register" asp-controller="KhachHang">Đăng ký</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-action="Login" asp-controller="KhachHang">Đăng nhập</a>
+                    </li>
+                    }
+                    else
+                    {
+                    <li class="nav-item">
+                        <a asp-action="Profile" asp-controller="KhachHang">Xin chào @kh.HoTen</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-action="Logout" asp-controller="KhachHang">Đăng xuất</a>
+                    </li>
+                    }
+                </ul>
             </div>
         </nav>
     </header>
