@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<h3 id="dongho" class="text-danger"></h3>
+@section Scripts{
+    <script>
+        $(function () {
+            setInterval(function () {
+                $.ajax({
+                    url: "/Ajax/GetServerTimes",
+                    success: function (data) {
+                        $("#dongho").html(data);
+                    },
+                    error: function (xhr, opt, mess) {
+                        console.log(xhr);
+                        //alert("Lỗi: ");
+                    }
+                });
+            }, 1000);
+
+        });
+    </script>
+}
+

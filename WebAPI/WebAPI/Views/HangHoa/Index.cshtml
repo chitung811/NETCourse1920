@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Tìm kiếm</h1>
+
+<form asp-action="Index">
+    Tìm <input name="TuKhoa" placeholder="Cần tìm?" />
+    Giá từ <input type="number" min="0" name="GiaTu" />
+    đến <input type="number" min="0" name="GiaDen" />
+    <button class="btn btn-success">Tìm</button>
+</form>
+
+@{
+    var data = ViewBag.Data ?? new List<HangHoaViewModel>();
+}
+<table class="table table-bordered">
+    @foreach (var hh in data)
+    {
+        <tbody>
+            <tr>
+                <td>
+                    <img src="~/Hinh/HangHoa/@hh.Hinh" height="80" />
+                </td>
+                <td>@hh.MaHh</td>
+                <td>@hh.TenHh</td>
+                <td>@hh.GiaBan</td>
+                <td>@hh.Loai</td>
+                <td>@hh.NhaCungCap</td>
+            </tr>
+        </tbody>
+    }
+</table>

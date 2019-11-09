@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewData["Title"] = "Session";
+}
+
+@using Microsoft.AspNetCore.Http;
+@using D07_EFCore_DBFirst.Helpers;
+<h1>Session</h1>
+<h3>Lớp: @Context.Session.GetString("Lop")</h3>
+<h3>Năm: @Context.Session.GetString("Nam")</h3>
+
+@{ 
+    var loai = Context.Session.Get<Loai>("Loai");
+}
+@loai?.TenLoai

@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewData["Title"] = "JsonSearch";
+}
+
+<fieldset>
+    <legend>Json Search</legend>
+    Tên: <input id="tukhoa" placeholder="cần tìm?" /><br />
+    Giá từ <input id="giatu" type="number" />
+    đến <input id="giaden" type="number" />
+    <button type="button" id="btnTim">Tra cứu</button>
+</fieldset>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>STT</th><th>Mã</th>
+            <th>Tên</th><th>Đơn giá</th>
+            <th>Hình</th>
+        </tr>
+    </thead>
+    <tbody id="result"></tbody>
+</table>
+@section Scripts{
+    <script>
+        $(function(){
+            $("#btnTim").click(function () {
+                $.ajax({
+                    url: "/Ajax/JsonSearch",
+                    type: "POST",
+                    data: {
+                        tukhoa: $("#tukhoa").val(),
+                        giatu: $("#giatu").val(),
+                        giaden: $("#giaden").val()
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        $("#result").html("");
+                        $(data).each(function (index, item) {
+                            var tr = $("<tr/>");
+                            $("<td/>").html(index + 1).appendTo(tr);
+                            $("<td/>").html(item.maHh).appendTo(tr);
+                            $("<td/>").html(item.tenHh).appendTo(tr);
+                            $("<td/>").html(item.donGia).appendTo(tr);
+
+                            $("<td/>").html("<img src='data:image/jpeg; base64, " + item.hinh + "' />").appendTo(tr);
+
+                            $("#result").append(tr);
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}
