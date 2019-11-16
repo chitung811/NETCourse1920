@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using WebAPI.Models;
 
 namespace D07_EFCore_DBFirst
 {
@@ -58,8 +59,13 @@ namespace D07_EFCore_DBFirst
             //        opt.LogoutPath = "/KhachHang/Logout";
             //    });
 
-            var keyInConfig = Configuration["AppSettings:PrivatedKey"];
-            var key = Encoding.Unicode.GetBytes(keyInConfig);
+            //var keyInConfig = Configuration["AppSettings:PrivatedKey"];
+            //var key = Encoding.Unicode.GetBytes(keyInConfig);
+
+            var appSettings = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettings);
+            var appSettingModel = appSettings.Get<AppSettings>();
+            var key = Encoding.Unicode.GetBytes(appSettingModel.PrivateKey);
 
             //Authentication using JWT
             services.AddAuthentication(x =>

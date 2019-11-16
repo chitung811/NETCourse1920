@@ -10,6 +10,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+using WebAPI.Models;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 namespace D07_EFCore_DBFirst.Controllers
 {
@@ -18,10 +23,12 @@ namespace D07_EFCore_DBFirst.Controllers
     {
         private readonly MyeStoreContext _context;
         private readonly IMapper _mapper;
-        public KhachHangController(MyeStoreContext ctx, IMapper mapper)
+        private readonly AppSettings _appSetting;
+        public KhachHangController(MyeStoreContext ctx, IMapper mapper, IOptions<AppSettings> appSetting)
         {
             _context = ctx;
             _mapper = mapper;
+            _appSetting = appSetting.Value;
         }
         public IActionResult Index()
         {
@@ -39,7 +46,7 @@ namespace D07_EFCore_DBFirst.Controllers
         public async Task<IActionResult> Login(LoginViewModel model, string ReturnUrl = null)
         {
             var kh = _context.KhachHang.SingleOrDefault(p => p.MaKh == model.MaKh && p.MatKhau == model.MatKhau);
-            if(kh != null)
+            if (kh != null)
             {
                 HttpContext.Session.Set("KhachHang", kh);
 
@@ -53,7 +60,7 @@ namespace D07_EFCore_DBFirst.Controllers
                 ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
                 await HttpContext.SignInAsync(principal);
 
-                if(Url.IsLocalUrl(ReturnUrl))
+                if (Url.IsLocalUrl(ReturnUrl))
                 {
                     return Redirect(ReturnUrl);
                 }
@@ -67,7 +74,7 @@ namespace D07_EFCore_DBFirst.Controllers
             return Content("Profile");
         }
 
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult PurchaseOrder()
         {
             return Content("PurchaseOrder");
@@ -79,6 +86,37 @@ namespace D07_EFCore_DBFirst.Controllers
             await HttpContext.SignOutAsync();
 
             return RedirectToAction("Index", "Home");
+        }
+
+        /*Verify user and provide token (for JWT)*/
+        [HttpPost]
+        public IActionResult VerifyUser(LoginViewModel model)
+        {
+            var kh = _context.KhachHang.SingleOrDefault(p => p.MaKh == model.MaKh && p.MatKhau == model.MatKhau);
+            if (kh == null)
+            {
+                return this.StatusCode(422, new { success = false, message = "Verify user is not successful." });
+            }
+
+            //Cấp token
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.Unicode.GetBytes(_appSetting.PrivateKey);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, kh.HoTen.ToString()),
+                    new Claim(ClaimTypes.Role, "KhachHang")
+                }),
+                Expires = DateTime.UtcNow.AddMinutes(_appSetting.ExpireTime),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return this.Ok(new {
+                success = true,
+                token = tokenHandler.WriteToken(token)
+            });
         }
     }
 }
